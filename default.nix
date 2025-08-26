@@ -3,5 +3,8 @@ let
   pkgs = import nixpkgs { config = {}; overlays = []; };
 in
 {
-  static_server = pkgs.callPackage ./static_server.nix { };
+  hello = pkgs.callPackage ./hello.nix { };
+#   static_server = pkgs.callPackage ./static_server.nix { };
+  icat = pkgs.callPackage ./icat.nix { };
 }
+
