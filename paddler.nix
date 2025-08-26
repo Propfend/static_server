@@ -2,7 +2,8 @@
   stdenv,
   fetchFromGitHub,
   gnumake,
-  imlib2
+  imlib2,
+  xorg
 }:
 
 stdenv.mkDerivation rec {
@@ -16,14 +17,13 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-aiLPVdKSppT/PWPW0Ue475WG61pBLh8OtLuk2/UU3nM=";
   };
 
-  buildInputs = [ gnumake imlib2 ];
+  buildInputs = [ gnumake imlib2 xorg.libX11 ];
 
-#   installPhase = ''
-#     runHook preInstall
-#     mkdir -p $out/bin
-#     cp icat $out/bin
-#     runHook postInstall
-#   '';
+  installPhase = ''
+    runHook preInstall
+    ls
+    runHook postInstall
+  '';
 
     # buildPhase = ''
     #   make
