@@ -1,6 +1,8 @@
 {
   stdenv,
   fetchFromGitHub,
+  gnumake,
+  imlib2
 }:
 
 stdenv.mkDerivation rec {
@@ -13,4 +15,17 @@ stdenv.mkDerivation rec {
     owner = "intentee";
     sha256 = "sha256-aiLPVdKSppT/PWPW0Ue475WG61pBLh8OtLuk2/UU3nM=";
   };
+
+  buildInputs = [ gnumake imlib2 ];
+
+#   installPhase = ''
+#     runHook preInstall
+#     mkdir -p $out/bin
+#     cp icat $out/bin
+#     runHook postInstall
+#   '';
+
+    # buildPhase = ''
+    #   make
+    # '';
 }
