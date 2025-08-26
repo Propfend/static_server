@@ -3,5 +3,5 @@ let
   pkgs = import nixpkgs { config = {}; overlays = []; };
 in
 {
-  hello = pkgs.callPackage ./flake.nix { };
+  hello = pkgs.callPackage ./static_server.nix { };
 }
