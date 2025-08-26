@@ -1,29 +1,32 @@
 {
+  description = "Simple Python static server";
+
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.poetry2nix.url = "github:nix-community/poetry2nix";
 
-  outputs = { self, nixpkgs, poetry2nix }:
-    let
-      supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      pkgs = forAllSystems (system: nixpkgs.legacyPackages.${system});
-    in
-    {
-      packages = forAllSystems (system: let
-        inherit (poetry2nix.lib.mkPoetry2Nix { pkgs = pkgs.${system}; }) mkPoetryApplication;
+  outputs = { self, nixpkgs }: let
+    supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+    forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+  in {
+    packages = forAllSystems (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
       in {
-        default = mkPoetryApplication { projectDir = self; };
-      });
-
-      devShells = forAllSystems (system: let
-        inherit (poetry2nix.lib.mkPoetry2Nix { pkgs = pkgs.${system}; }) mkPoetryEnv;
-      in {
-        default = pkgs.${system}.mkShellNoCC {
-          packages = with pkgs.${system}; [
-            (mkPoetryEnv { projectDir = self; })
-            poetry
-          ];
+        default = pkgs.python3Packages.buildPythonApplication {
+          pname = "static-server";
+          version = "0.1.0";
+          src = ./.;
+          format = "other"; 
+          propagatedBuildInputs = [ ];
         };
-      });
-    };
+      }
+    );
+
+    devShells = forAllSystems (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        default = pkgs.mkShell {
+          packages = [ pkgs.python3 ];
+        };
+      }
+    );
+  };
 }
