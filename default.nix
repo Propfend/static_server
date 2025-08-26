@@ -3,8 +3,9 @@ let
   pkgs = import nixpkgs {};
 in
 {
-  hello = pkgs.callPackage ./hello.nix { };
-#   static_server = pkgs.callPackage ./static_server.nix { };
-  icat = pkgs.callPackage ./icat.nix { };
+  # hello = pkgs.callPackage ./hello.nix { };
+  # static_server = pkgs.callPackage ./static_server.nix { };
+  # icat = pkgs.callPackage ./icat.nix { };
+  paddler = pkgs.callPackage ./paddler.nix { };
 }
 
