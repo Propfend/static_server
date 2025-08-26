@@ -1,17 +1,25 @@
 {
   stdenv,
   fetchFromGitHub,
+  imlib2,
+  xorg
 }:
 
 stdenv.mkDerivation rec {
   pname = "icat";
-  version = "0.5";
-  owner = "atextor";
+  version = "v0.5";
 
   src = fetchFromGitHub {
-    repo = "https://github.com/${owner}/${pname}";
-    rev = "v${version}";
-    owner = owner;
-    sha256 = "";
+    repo = "${pname}";
+    rev = "v0.5";
+    owner = "atextor";
+    sha256 = "sha256-aiLPVdKSppT/PWPW0Ue475WG61pBLh8OtLuk2/UU3nM=";
   };
+
+  buildInputs = [ imlib2 xorg.libX11 ];
+
+  installPhase = ''
+    mkdir -p $out/bin
+    cp icat $out/bin
+  '';
 }
