@@ -13,7 +13,6 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/bin
-    cp $src/main.py $out/bin/static_server
-    chmod +x $out/bin/static_serverv
+    cp main.py $out/bin/static_server
   '';
 }
